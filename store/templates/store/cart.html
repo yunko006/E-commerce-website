@@ -1,0 +1,90 @@
+{% extends 'store/base.html' %}
+{% load bootstrap4 %}
+
+{% block page_header %}
+  <a  class="btn btn-outline-dark" href="{% url 'store:store' %}">&#x2190; Retour au magasin</a>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  
+  <div class="col-md-8 order-md-1">
+    
+    <!-- <div class="mb-3"> -->
+      
+      <!-- <div class="pt-4 wish-list"> -->
+        
+    {% for item in items %}
+    <div class="card mb-3">
+            
+      <div class="row no-gutters">
+        <div class="col">
+          <img src="{{ item.product.image.url }}" class="img-thumbnail" style="width: 80%;" alt="Responsive image">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title" href="{% url 'store:item' item.product.id %}">
+              <a href="{% url 'store:item' item.product.id %}">{{ item.product.name }}</a>
+            </h5>
+            <p class="card-text">Quantité: {{ item.quantity }} </p>
+
+                    <!-- <form class="form-inline">
+                      <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Qté</label>
+                      <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" action="{% url 'store:add_to_cart' item.product.id%}">
+                        <option selected>1</option>
+                        <option value="1">2</option>
+                        <option value="2">3</option>
+                        <option value="3">4</option>
+                      </select>
+                    </form> -->
+
+            <a href="{% url 'store:remove_from_cart' item.product.id %}" type="button" class="card-link-secondary small"> Supprimer </a>
+            <a href="{% url 'store:add_to_cart' item.product.id %}" type="button" class="card-link-secondary small">Ajouter x1 qté </a>
+            <p class="card-price"><small class="text-muted">Prix (à l'unité): {{ item.product.price }}€ </small></p>
+          </div>
+        </div>
+      </div>
+    </div> 
+    {% empty %}
+    <div class="pt-4">
+      <h5>Votre panier est vide.</h5>
+    </div>
+    
+      <!-- </div> -->
+    <!-- </div> -->
+    {% endfor %}
+  </div>
+  
+
+  <div class="col-md-4 order-md-2 mb-4">
+    <div class="mb-3">
+      <div class="pt-4">
+        <h5 class="mb-3">Panier ({{order.get_cart_items}}
+          {% if order.get_cart_items <= 1 %}
+            article)
+          {% else %}
+            articles)
+          {% endif %}   
+        </h5>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+            <div>
+              <strong>Montant total</strong>
+              <strong>
+                <p class="mb-0">(avec TVA)</p>
+              </strong>
+            </div>
+            <span><strong>{{ order.get_cart_total }}€</strong></span>
+          </li>
+        </ul>
+        {% buttons %}
+          <a class="btn btn-primary btn-block" href="{% url 'store:checkout' %}">Passer la commande</a>
+        {% endbuttons %}
+
+      </div>  
+    </div>
+  </div>
+
+</div>
+
+{% endblock content %}

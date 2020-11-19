@@ -1,0 +1,53 @@
+{% extends 'store/base.html' %}
+{% load bootstrap4 %}
+ 
+{% block page_header %}
+{% for message in messages %}
+<div class="container-fluid p-0">
+  <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+  </div>
+</div>
+{% endfor %}
+
+
+  <form class="form-control-lg" action="{% url 'store:search' %}" method="GET">
+    <input class="form-control" name="search" type="search" placeholder="Search" aria-label="Search">
+    <!-- <div class="cols-xs-12">
+      <div class="text-right">
+        {% buttons %}
+          <button class="btn btn-outline-success" name="submit">Search</button>
+        {% endbuttons %}
+      </div>
+    </div> -->
+  </form>
+
+{% endblock page_header %}
+
+{% block content %}
+
+  <div class="card-columns">
+    {% for product in products %}    
+      <div class="card">
+        <img class="card-img-top" src="{{ product.image.url }}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">
+            <a href="{% url 'store:item' product.id %}">{{ product.name }}</a>
+          </h5>
+          <p class="card-text">{{ product.description }}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">{{ product.price }}€</li>
+        </ul>
+        <div class="card-footer">
+          <a href="{% url 'store:add_to_cart' product.id %}" class="card-link">Ajouter au panier</a>
+          <a href="{% url 'store:item' product.id %}" class="card-link">Voir</a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+{% endblock content %}

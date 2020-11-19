@@ -1,0 +1,35 @@
+{% extends 'store/base.html' %}
+
+{% block page_header %}
+  <a  class="btn btn-outline-dark" href="{% url 'store:store' %}">&#x2190; Retour au magasin</a>
+{% endblock %}
+
+{% block content %}
+  <div class="text-center">
+    <p>Votre recherche: <strong>{{search}}</strong> </p>
+  </div>
+
+  <div class="card-columns">
+    {% for product in products %}    
+      <div class="card">
+        <center>
+          <img class="card-img-top" src="{{ product.image.url }}" alt="Card image cap" style="width: auto; height: 195px;">
+        </center>
+        <div class="card-body">
+          <h5 class="card-title">{{ product.name }}</h5>
+          <p class="card-text">{{ product.description }}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">{{ product.price }}€</li>
+        </ul>
+        <div class="card-body">
+          <a href="{% url 'store:add_to_cart' product.id %}" class="card-link">Ajouter au panier</a>
+          <a href="{% url 'store:item' product.id %}" class="card-link">Voir</a>
+        </div>
+      </div>
+    {% empty %}
+    <h3>Aucun résultat.</h3>
+  {% endfor %}
+  </div>
+
+{% endblock content %}

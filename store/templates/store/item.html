@@ -1,0 +1,34 @@
+{% extends 'store/base.html' %}
+{% load bootstrap4 %}
+{% block page_header %}
+  <a  class="btn btn-outline-dark" href="{% url 'store:store' %}">&#x2190; Retour au magasin</a>
+{% endblock %}
+
+{% block content %}
+<div class="card mb-3">
+  <h4 class="card-header">
+    {{ item.name }}
+  </h4>
+  <div class="col">
+    <img src="{{ item.image.url }}" class="img-fluid" style="width: auto; height: 195px;" alt="Responsive image">
+  </div>
+  <div class="card-body">
+    <p class="card-text">
+      {{ item.description }}
+    </p>
+    <p class="price-tag">
+      {{ item.price }}
+      €
+    </p>
+    <a href="{% url 'store:add_to_cart' item.id %}">
+      {% buttons %}
+        {% if user.is_authenticated %}
+          <button name="submit" class="btn btn-primary">Ajouter au panier</button>
+        {% else %}
+          <a href="{% url 'users:login' %}" class="btn btn-primary" role="button">Log In</a>
+        {% endif %}
+      {% endbuttons %}
+    </a>
+  </div>
+</div>
+{% endblock content %}
