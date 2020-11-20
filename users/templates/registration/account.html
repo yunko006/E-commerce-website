@@ -1,0 +1,16 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+<div class="card">
+    <h5 class="card-header text-center">
+      Votre compte
+    </h5>
+    <div class="card-body">
+      <blockquote class="blockquote mb-0">
+        <p>Nom: {{ user.username }}</p>
+        <p>Mail: {{ user.email }} </p>
+      </blockquote>
+    </div>
+  </div>
+
+{% endblock %}

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from store.models import Customer
+from store.models import Order
 from .forms import RegisterForm
 from django.contrib.auth.models import User
 
@@ -33,3 +34,17 @@ def register(request):
 
     context = {'form': form}
     return render(request, 'registration/register.html', context)
+
+
+def account(request):
+    customer = request.user.customer
+    order, created = Order.objects.get_or_create(customer=customer, complete=False) 
+
+    user = request.user
+
+    context = {
+        'user': user,
+        'order': order,
+    }
+
+    return render(request, 'registration/account.html', context)
