@@ -2,7 +2,7 @@
 
 Features : 
 
-- Login and register account 
+- Login and register account (only a logged in user can add item to cart)
 - Show account information
 - User options : 
   - See cart 
@@ -20,5 +20,6 @@ Features :
  
  Features that will be added : 
  
+ - Cookies
  - Paypal / Stripe integration 
  - User order history
